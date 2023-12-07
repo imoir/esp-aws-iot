@@ -70,7 +70,7 @@ static const esp_partition_t *_esp_get_otadata_partition(uint32_t *offset, ota_s
         uint32_t gen_0_seq = ota_select_valid(&s_ota_select[0]) ? s_ota_select[0].ota_seq : 0;
         uint32_t gen_1_seq = ota_select_valid(&s_ota_select[1]) ? s_ota_select[1].ota_seq : 0;
         if (gen_0_seq == 0 && gen_1_seq == 0) {
-            ESP_LOGW(TAG, "otadata partition is invalid, factory/ota_0 is boot partition");
+            ESP_LOGI(TAG, "otadata partition is invalid, factory/ota_0 is boot partition");
             memcpy(entry, &s_ota_select[0], sizeof(ota_select));
             *offset = 0;
         } else if ((gen_0_seq >= gen_1_seq && active_part) || (gen_1_seq > gen_0_seq && !active_part)) {
