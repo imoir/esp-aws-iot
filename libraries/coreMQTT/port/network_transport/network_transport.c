@@ -5,6 +5,11 @@
 #include "network_transport.h"
 #include "sdkconfig.h"
 
+// May cause trouble with watchdog and keep alive during large transfers, e.g. OTA
+// This is due to the slowness of dumping data over a serial link
+//#define DUMP_RECEIVE_DATA
+//#define DUMP_SEND_DATA
+
 TlsTransportStatus_t xTlsConnect( NetworkContext_t* pxNetworkContext )
 {
     TlsTransportStatus_t xRet = TLS_TRANSPORT_SUCCESS;
@@ -83,6 +88,10 @@ int32_t espTlsTransportSend(NetworkContext_t* pxNetworkContext,
         xSemaphoreTake(pxNetworkContext->xTlsContextSemaphore, portMAX_DELAY);
         lBytesSent = esp_tls_conn_write(pxNetworkContext->pxTls, pvData, uxDataLen);
         xSemaphoreGive(pxNetworkContext->xTlsContextSemaphore);
+
+#ifdef DUMP_SEND_DATA
+        ESP_LOG_BUFFER_HEXDUMP("NetTransTx", pvData, uxDataLen, ESP_LOG_INFO);
+#endif
     }
     else
     {
@@ -105,6 +114,11 @@ int32_t espTlsTransportRecv(NetworkContext_t* pxNetworkContext,
         xSemaphoreTake(pxNetworkContext->xTlsContextSemaphore, portMAX_DELAY);
         lBytesRead = esp_tls_conn_read(pxNetworkContext->pxTls, pvData, uxDataLen);
         xSemaphoreGive(pxNetworkContext->xTlsContextSemaphore);
+
+#ifdef DUMP_RECEIVE_DATA
+        if (lBytesRead > 0)
+            ESP_LOG_BUFFER_HEXDUMP("NetTransRx", pvData, lBytesRead, ESP_LOG_INFO);
+#endif
     }
     else
     {
