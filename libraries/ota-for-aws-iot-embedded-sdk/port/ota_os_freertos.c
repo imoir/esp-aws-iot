@@ -131,9 +131,8 @@ OtaOsStatus_t OtaReceiveEvent_FreeRTOS( OtaEventContext_t * pEventCtx,
     uint8_t buff[ sizeof( OtaEventMsg_t ) ];
 
     ( void ) pEventCtx;
-    ( void ) timeout;
 
-    retVal = xQueueReceive( otaEventQueue, &buff, portMAX_DELAY );
+    retVal = xQueueReceive( otaEventQueue, &buff, timeout );
 
     if( retVal == pdTRUE )
     {
@@ -144,11 +143,6 @@ OtaOsStatus_t OtaReceiveEvent_FreeRTOS( OtaEventContext_t * pEventCtx,
     else
     {
         otaOsStatus = OtaOsEventQueueReceiveFailed;
-
-        LogError( ( "Failed to receive event from OTA Event Queue: "
-                    "xQueueReceive returned error: "
-                    "OtaOsStatus_t=%i ",
-                    otaOsStatus ) );
     }
 
     return otaOsStatus;
