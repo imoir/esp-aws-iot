@@ -31,6 +31,12 @@
 #ifndef OTA_PAL_H_
 #define OTA_PAL_H_
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
+
 #include "ota.h"
 #include "esp_err.h"
 
@@ -227,5 +233,11 @@ esp_err_t otaPal_EraseLastBootPartition(void);
  *        - true:    If successful.
  */
 bool otaPal_SetCodeSigningCertificate(const char * pcCodeSigningCertificatePEM);
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* ifndef OTA_PAL_H_ */

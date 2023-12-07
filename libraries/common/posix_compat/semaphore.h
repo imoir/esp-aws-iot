@@ -19,6 +19,12 @@
 #ifndef __SEMAPHORE_H__
 #define __SEMAPHORE_H__
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -39,5 +45,10 @@ int osi_sem_take(osi_sem_t *sem, uint32_t timeout);
 
 void osi_sem_give(osi_sem_t *sem);
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* __SEMAPHORE_H__ */

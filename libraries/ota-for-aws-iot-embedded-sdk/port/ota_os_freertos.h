@@ -29,6 +29,12 @@
 #ifndef _OTA_OS_FREERTOS_H_
 #define _OTA_OS_FREERTOS_H_
 
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
+
 /* Standard library include. */
 #include <stdint.h>
 #include <string.h>
@@ -162,5 +168,11 @@ void * Malloc_FreeRTOS( size_t size );
  */
 
 void Free_FreeRTOS( void * ptr );
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* ifndef _OTA_OS_FREERTOS_H_ */
